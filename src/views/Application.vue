@@ -24,8 +24,8 @@ export default {
     data() {
         return {
             drawer: true,
-            selected: 1,
-            title: "新規作成",
+            selected: 7,
+            title: "アプリ設定",
         };
     },
     methods: {

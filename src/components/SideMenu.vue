@@ -9,7 +9,7 @@
 
         <!-- <v-divider></v-divider> -->
         <v-list>
-            <v-list-item-group v-model="active">
+            <v-list-item-group v-model="selectedPage">
                 <router-link to="/">
                     <v-list-item link>
                         <v-list-item-icon>
@@ -60,7 +60,7 @@
                         </v-list-item-content>
                     </v-list-item>
                 </router-link>
-                <v-list-group :value="false" no-action prepend-icon="mdi-cog">
+                <v-list-group :value="selectedSettingFlag" no-action prepend-icon="mdi-cog">
                     <template v-slot:activator>
                         <v-list-item-title>設定</v-list-item-title>
                     </template>
@@ -101,7 +101,7 @@
 <script>
 export default {
     props: {
-        active: {
+        selected: {
             type: Number,
             default: 0
         },
@@ -112,7 +112,9 @@ export default {
     },
     data() {
         return {
+            selectedPage: null,
             drawerFlag: null,
+            selectedSettingFlag: false,
         }
     },
     computed: {
@@ -120,9 +122,22 @@ export default {
     methods: {
     },
     watch: {
-        drawer(newV, oldV) {
-            console.log(oldV);
-            this.drawerFlag = newV;
+        // 選択中のサイドメニュー
+        selected: {
+            immediate: true,
+            handler(newSelected) {
+                this.selectedPage = newSelected;
+                if (newSelected > 5) {
+                    this.selectedSettingFlag = true;
+                }
+            }
+        },
+        // サイドメニューの開閉フラグ
+        drawer: {
+            immediate: true,
+            handler(newDrawer) {
+                this.drawerFlag = newDrawer;
+            }
         },
     },
 }

@@ -1,16 +1,11 @@
 <template>
     <v-app id="dashboard">
         <!-- サイドメニュー -->
-        <side-menu :active="selected" :drawer="drawer" />
+        <side-menu :selected="selected" :drawer="drawer" />
 
         <!-- ヘッダー -->
-        <v-app-bar app>
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Dashboard</v-toolbar-title>
+        <app-bar :title="title" :drawer="drawer" @changeDrawer="changeDrawer" />
 
-            <v-spacer></v-spacer>
-
-        </v-app-bar>
         <v-main>
             <v-container>
                 <v-row dense>
@@ -63,15 +58,18 @@
 </template>
 
 <script>
+import AppBar from '../components/AppBar.vue'
 import SideMenu from '../components/SideMenu.vue'
 export default {
     components: {
+        AppBar,
         SideMenu,
     },
     data() {
         return {
-            drawer: null,
+            drawer: true,
             selected: 0,
+            title: "Dashboard",
             panel: [0],
             dialog: false,
             dialogTitle: null,
@@ -120,6 +118,10 @@ export default {
     computed: {
     },
     methods: {
+        // サイドメニューの開閉
+        changeDrawer(newDrawer) {
+            this.drawer = newDrawer;
+        },
         // 各リストのタイトル
         listTitle(i) {
             if (i == 0) {
@@ -139,7 +141,6 @@ export default {
         },
         // 編集可能にする
         editable() {
-            console.log(1);
         },
     },
 };
