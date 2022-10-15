@@ -3,8 +3,8 @@
     <v-navigation-drawer v-model="drawerFlag" class="blue-grey darken-2" dark app>
         <v-sheet color="blue-grey darken-2" class="pa-4">
             <v-avatar class="mb-4" color="grey" size="64"></v-avatar>
-            <div class="title" style="color:#fff;">水口 佑介</div>
-            <div style="color:#fff;">example@vuetifyjs.com</div>
+            <div class="title" style="color:#fff;">{{ userInfo.userName }}</div>
+            <div style="color:#fff;">{{ userInfo.email }}</div>
         </v-sheet>
 
         <!-- <v-divider></v-divider> -->
@@ -118,6 +118,9 @@ export default {
         }
     },
     computed: {
+        userInfo() {
+            return this.$store.getters['user/baseInfo'];
+        }
     },
     methods: {
     },
