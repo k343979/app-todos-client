@@ -14,14 +14,20 @@
                             <v-card-title>
                                 完了タスク一覧
                                 <v-spacer></v-spacer>
-                                <!-- 検索フィールド -->
-                                <search-field v-if="searchFieldFlag" :searchItems="searchItems" />
                                 <!-- 検索フィールド開閉ボタン -->
                                 <v-btn
                                     @click="searchFieldFlag = !searchFieldFlag"
-                                    color="primary">
-                                    <v-icon dark>mdi-magnify</v-icon>
+                                    color="primary"
+                                    rounded
+                                    top
+                                    right>
+                                    検索条件
+                                    <v-icon>{{ searchFieldFlag ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
                                 </v-btn>
+                                <!-- 検索フィールド -->
+                                <v-expand-transition>
+                                    <search-field v-if="searchFieldFlag" :searchItems="searchItems" />
+                                </v-expand-transition>
                             </v-card-title>
                             <!-- テーブル -->
                             <data-table
