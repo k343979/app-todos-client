@@ -1,8 +1,11 @@
 const state = {
     // ユーザー情報
     baseInfo: {
-        userName: "水口 佑介",
+        lastName: "水口",
+        firstName: "佑介",
         email: "example@vuetifyjs.com",
+        phoneNumber: "09012345678",
+        jobTitle: "CEO / Co-Founder"
     }
 };
 

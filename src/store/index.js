@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 
 import form from './modules/form'
 import user from './modules/user'
+import tasks from './modules/tasks'
 
 Vue.use(Vuex)
 
@@ -11,10 +12,9 @@ export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     modules: {
         namespaced: true,
-        // ユーザー情報
-        user,
-        // フォーム
-        form
+        user, // ユーザー情報
+        form, // フォーム
+        tasks, // タスク関連
     },
     // plugins: [createPersistedState()]
 })

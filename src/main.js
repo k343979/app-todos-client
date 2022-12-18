@@ -1,14 +1,18 @@
 import Vue from "vue";
-import Base from "./Base.vue";
+import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import DashboardPlugin from "./plugins/dashboard-plugin";
 
 Vue.config.productionTip = false;
+
+// plugin setup
+Vue.use(DashboardPlugin);
 
 new Vue({
     router,
     store,
     vuetify,
-    render: (h) => h(Base),
+    render: (h) => h(App),
 }).$mount("#app");
