@@ -37,7 +37,7 @@
                     <v-text-field
                         color="#e91e63"
                         label="電話番号"
-                        v-model="userForm.phoneNumber"
+                        v-model="userForm.tel"
                         placeholder="+40 735 631 620"
                         class="font-size-input input-style">
                     </v-text-field>
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Profile',
     components: {
@@ -89,25 +90,64 @@ export default {
         }
     },
     computed: {
+        /**
+         * ユーザ情報
+         * @type Object
+         */
         userInfo() {
             return this.$store.getters['user/baseInfo'];
         },
     },
     methods: {
-        // フォームの初期化/基本情報フォームにユーザー情報をセット
-        initForm() {
+        /**
+         * ユーザ情報を取得し、vuexにセット
+         */
+        fetch() {
+            axios
+                .get(`http://localhost:3000/v1/user/1`)
+                .then((res) => {
+                    this.$store.commit('user/setBaseInfo', res.data.user);
+                })
+                .catch((e) => { console.log(e); })
+                .finally(() => {
+                    // フォームにユーザ情報をセット
+                    this.setForm();
+                })
+        },
+        /**
+         * vuexからユーザ情報を取得し、フォームにセット
+         */
+        setForm() {
             // 「=」の値渡しだとミューテーションエラーになるため、deep copyする
             this.userForm = JSON.parse(JSON.stringify(this.$store.getters['user/baseInfo']));
         },
-        // ユーザー情報を更新
+        /**
+         * ユーザ情報を更新し、vuexにセット
+         *
+         * @param userForm
+         */
         update(userForm) {
-            this.$store.commit('user/setBaseInfo', userForm);
-            // 再読み込みすることで同期を遮断する
-            this.initForm();
+            axios
+                .put('http://localhost:3000/v1/user', userForm)
+                .then((res) => {
+                    this.$store.commit('user/setBaseInfo', res.data.user);
+                })
+                .catch((e) => { console.log(e); })
+                .finally(() => {
+                    // フォームにユーザ情報をセット
+                    this.setForm();
+                })
         }
     },
     mounted() {
-        this.initForm();
+        if (!this.userInfo) {
+            // ユーザ情報を取得
+            this.fetch();
+        } else {
+            setTimeout(() => {
+                this.setForm();
+            }, 200);
+        }
     }
 };
 </script>

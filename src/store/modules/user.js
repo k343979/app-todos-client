@@ -1,12 +1,6 @@
 const state = {
     // ユーザー情報
-    baseInfo: {
-        lastName: "水口",
-        firstName: "佑介",
-        email: "example@vuetifyjs.com",
-        phoneNumber: "09012345678",
-        jobTitle: "CEO / Co-Founder"
-    }
+    baseInfo: {}
 };
 
 const getters = {
